@@ -1,5 +1,5 @@
 # VanOptimization
-# Van Optimization Service
+
 
 Backend service for optimizing shipment selection for delivery vans.
 
