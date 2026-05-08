@@ -1,0 +1,23 @@
+POST http://localhost:8080/api/optimizations
+Content-Type: application/json
+
+{
+  "maxVolume": 15,
+  "shipments": [
+    {
+      "name": "A",
+      "volume": 5,
+      "revenue": 120
+    },
+    {
+      "name": "B",
+      "volume": 10,
+      "revenue": 200
+    },
+    {
+      "name": "C",
+      "volume": 3,
+      "revenue": 80
+    }
+  ]
+}
