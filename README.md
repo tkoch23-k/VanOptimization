@@ -26,9 +26,9 @@ Optimization is implemented using a dynamic programming knapsack algorithm.
 
 ## Clone Repository
 
-git clone https://github.com/YOUR_USERNAME/vanopt.git
+git clone https://github.com/tkoch23-k/VanOptimization.git
 
-cd vanopt
+cd VanOptimization
 
 ---
 
