@@ -10,6 +10,8 @@ import vanopt.repository.OptimizationRequestRepository;
 import vanopt.repository.SelectedShipmentRepository;
 import java.time.LocalDateTime;
 import java.util.UUID;
+import java.util.stream.Collectors;
+
 import vanopt.entity.SelectedShipmentEntity;
 @Service
 public class OptimizationService {
@@ -93,5 +95,67 @@ public class OptimizationService {
         optimizationResponse.setCreatedAt(startTime);
 
         return optimizationResponse;
+    }
+    public OptimizationResponse getById(UUID requestId) {
+        OptimizationRequestEntity entity = optimizationRequestRepository
+                .findById(requestId)
+                .orElseThrow(() -> new RuntimeException(
+                        "Optimization request not found with id: " + requestId
+                ));
+        List<SelectedShipmentEntity> shipmentEntities =
+                selectedShipmentRepository.findByRequestId(requestId);
+
+        List<Shipment> selectedShipments = shipmentEntities.stream()
+                .map(s -> {
+                    Shipment shipment = new Shipment();
+                    shipment.setName(s.getName());
+                    shipment.setVolume(s.getVolume());
+                    shipment.setRevenue(s.getRevenue());
+                    return shipment;
+                })
+                .collect(Collectors.toList());
+
+
+        OptimizationResponse response = new OptimizationResponse();
+        response.setRequestId(entity.getId());
+        response.setSelectedShipments(selectedShipments);
+        response.setTotalVolume(entity.getTotalVolume());
+        response.setTotalRevenue(entity.getTotalRevenue());
+        response.setCreatedAt(entity.getCreatedAt());
+
+        return response;
+    }
+
+
+    public List<OptimizationResponse> getAll() {
+
+        List<OptimizationRequestEntity> allEntities =
+                optimizationRequestRepository.findAll();
+
+        return allEntities.stream()
+                .map(entity -> {
+                    List<SelectedShipmentEntity> shipmentEntities =
+                            selectedShipmentRepository.findByRequestId(entity.getId());
+
+                    List<Shipment> selectedShipments = shipmentEntities.stream()
+                            .map(s -> {
+                                Shipment shipment = new Shipment();
+                                shipment.setName(s.getName());
+                                shipment.setVolume(s.getVolume());
+                                shipment.setRevenue(s.getRevenue());
+                                return shipment;
+                            })
+                            .collect(Collectors.toList());
+
+                    OptimizationResponse response = new OptimizationResponse();
+                    response.setRequestId(entity.getId());
+                    response.setSelectedShipments(selectedShipments);
+                    response.setTotalVolume(entity.getTotalVolume());
+                    response.setTotalRevenue(entity.getTotalRevenue());
+                    response.setCreatedAt(entity.getCreatedAt());
+
+                    return response;
+                })
+                .collect(Collectors.toList());
     }
 }
