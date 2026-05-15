@@ -11,8 +11,8 @@ CREATE TABLE selected_shipment (
                                    request_id UUID NOT NULL REFERENCES optimization_request(id),
                                    name VARCHAR(255) NOT NULL,
                                    volume INTEGER NOT NULL,
-                                   revenue INTEGER NOT NULL
-                                       selected   BOOLEAN      NOT NULL,
+                                   revenue INTEGER NOT NULL,
+                                   selected   BOOLEAN      NOT NULL,
 
                                    CONSTRAINT fk_shipment_request
                                        FOREIGN KEY (request_id)
@@ -21,4 +21,4 @@ CREATE TABLE selected_shipment (
 );
 
 CREATE INDEX idx_shipment_request_id
-    ON shipment (request_id);
+    ON selected_shipment (request_id);
