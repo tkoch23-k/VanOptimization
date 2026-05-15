@@ -64,7 +64,7 @@ Database schema is managed using Flyway migrations.
 
 Migration file:
 
-V1__init_schema.sql
+V1__init.sql
 
 runs automatically when the application starts.
 
