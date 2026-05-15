@@ -12,4 +12,13 @@ CREATE TABLE selected_shipment (
                                    name VARCHAR(255) NOT NULL,
                                    volume INTEGER NOT NULL,
                                    revenue INTEGER NOT NULL
+                                       selected   BOOLEAN      NOT NULL,
+
+                                   CONSTRAINT fk_shipment_request
+                                       FOREIGN KEY (request_id)
+                                           REFERENCES optimization_request (id)
+                                           ON DELETE CASCADE
 );
+
+CREATE INDEX idx_shipment_request_id
+    ON shipment (request_id);
